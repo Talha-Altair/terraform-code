@@ -15,6 +15,7 @@ resource "azurerm_container_group" "containergroup" {
   ip_address_type     = "public"
   dns_name_label      = var.dns_name_label
   os_type             = var.os_type
+  restart_policy      = "Never"
 
   container {
     name   = var.container_name
@@ -26,5 +27,9 @@ resource "azurerm_container_group" "containergroup" {
       port     = var.port_number
       protocol = "TCP"
     }
+  }
+
+  tags = {
+    "talha" = "altair"
   }
 }

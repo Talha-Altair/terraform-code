@@ -14,10 +14,12 @@ variable "location" {
 }
 
 variable "dns_name_label" {
+  default = "altair"
   description = "The DNS label/name for the container groups IP"
 }
 
 variable "os_type" {
+  default = "Linux"
   description = "The OS for the container group. Allowed values are Linux and Windows"
 }
 
@@ -27,6 +29,7 @@ variable "container_name" {
 }
 
 variable "image_name" {
+  default = "nginx"
   description = "The container image name"
 }
 
