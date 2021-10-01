@@ -8,7 +8,7 @@ name_label = "altair"
 
 os_type = "Linux"
 
-container_name  = "nginx-container"
+container_name = "nginx-container"
 
 image_name = "nginx"
 

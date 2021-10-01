@@ -4,7 +4,7 @@ variable "container_group_name" {
 }
 
 variable "resource_group_name" {
-  default     = "MyContGroup-RG01"
+  default     = "altair_resource_group"
   description = "The name of the resource group"
 }
 
@@ -14,12 +14,12 @@ variable "location" {
 }
 
 variable "name_label" {
-  default = "altair"
+  default     = "altair"
   description = "The DNS label/name for the container groups IP"
 }
 
 variable "os_type" {
-  default = "Linux"
+  default     = "Linux"
   description = "The OS for the container group. Allowed values are Linux and Windows"
 }
 
@@ -29,7 +29,7 @@ variable "container_name" {
 }
 
 variable "image_name" {
-  default = "nginx"
+  default     = "nginx"
   description = "The container image name"
 }
 
