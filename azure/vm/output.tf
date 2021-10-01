@@ -3,6 +3,6 @@ output "tls_private_key" {
     sensitive = true
 }
 
-output "instance ip" {
-    value = azurerm_linux_virtual_machine.public_ip_address_id
+output "instance_ip" {
+    value = azurerm_linux_virtual_machine.myterraformvm.public_ip_address
 }

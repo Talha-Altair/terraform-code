@@ -71,6 +71,18 @@ resource "azurerm_network_security_group" "myterraformnsg" {
         destination_address_prefix = "*"
     }
 
+    security_rule {
+        name                       = "5000 port wala"
+        priority                   = 1001
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_port_range          = "*"
+        destination_port_range     = "5000"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+    }
+
     tags = {
         environment = var.name_label
     }
@@ -114,7 +126,7 @@ resource "random_id" "randomId" {
 resource "azurerm_storage_account" "mystorageaccount" {
     name                        = "diag${random_id.randomId.hex}"
     resource_group_name         = azurerm_resource_group.myterraformgroup.name
-    location                    = "eastus"
+    location                    = var.location
     account_tier                = "Standard"
     account_replication_type    = "LRS"
 
@@ -131,8 +143,8 @@ resource "tls_private_key" "example_ssh" {
 
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "myterraformvm" {
-    name                  = "myVM"
-    location              = "eastus"
+    name                  = var.name_label
+    location              = var.location
     resource_group_name   = azurerm_resource_group.myterraformgroup.name
     network_interface_ids = [azurerm_network_interface.myterraformnic.id]
     size                  = "Standard_DS1_v2"
@@ -150,12 +162,12 @@ resource "azurerm_linux_virtual_machine" "myterraformvm" {
         version   = "latest"
     }
 
-    computer_name  = "myvm"
-    admin_username = "azureuser"
+    computer_name  = var.name_label
+    admin_username = var.name_label
     disable_password_authentication = true
 
     admin_ssh_key {
-        username       = "azureuser"
+        username       = var.name_label
         public_key     = tls_private_key.example_ssh.public_key_openssh
     }
 
