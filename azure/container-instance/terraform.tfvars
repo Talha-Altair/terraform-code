@@ -1,16 +1,15 @@
-container_group_name = "altair-container-group"
+container_group_name = "tva-container-group"
 
-resource_group_name = "altair-resource-group"
+resource_group_name = "tva-resource-group"
 
 location = "eastus"
 
-dns_name_label = "altair"
+dns_name_label = "tva-altair"
 
 os_type = "Linux"
 
-container_name  = "nginx-container"
+container_name  = "tva-container"
 
-image_name = "nginx"
+image_name = "talhaabdurrahman/tva"
 
-port_number = 80
-
+port_number = 5000
