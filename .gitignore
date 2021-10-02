@@ -3,3 +3,5 @@
 *.hcl
 
 *.tfstate*
+
+*.pem

@@ -6,3 +6,7 @@ output "tls_private_key" {
 output "instance_ip" {
   value = azurerm_linux_virtual_machine.myterraformvm.public_ip_address
 }
+
+output "ssh_command" {
+  value = "ssh -i temp.pem ${azurerm_linux_virtual_machine.myterraformvm.admin_username}@${azurerm_linux_virtual_machine.myterraformvm.public_ip_address}"
+}
