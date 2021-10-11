@@ -18,7 +18,7 @@ resource "azurerm_container_group" "containergroup" {
 
   container {
     name   = "api"
-    image  = var.image_name
+    image  = var.api_image_uri
     cpu    = 0.5
     memory = 1.5
 
@@ -30,7 +30,7 @@ resource "azurerm_container_group" "containergroup" {
 
   container {
     name   = "ui"
-    image  = var.image_name
+    image  = var.ui_image_uri
     cpu    = 0.5
     memory = 1.5
 
@@ -39,9 +39,17 @@ resource "azurerm_container_group" "containergroup" {
       protocol = "TCP"
     }
 
-    environment_variables {
+    environment_variables = {
       API_URL = "http://localhost:4010"
     }
+  }
+
+  image_registry_credential {
+
+    username = "talha"
+    password = var.registry_password
+    server   = "talha.azurecr.io"
+
   }
 
   tags = {
