@@ -39,13 +39,13 @@ resource "azurerm_container_group" "containergroup" {
       protocol = "TCP"
     }
 
-    environment_variables{
+    environment_variables {
       API_URL = "http://localhost:4010"
     }
   }
 
   tags = {
-    "talha" = "altair",
+    "talha"    = "altair",
     "serkinti" = "containers"
   }
 }
