@@ -115,8 +115,3 @@ resource "aws_ecs_service" "ecs_service" {
     cfteam = "serkinti-terraform"
   }
 }
-
-output "Public_IP" {
-  description = "Public_IP of ecs task"
-  value       = aws_ecs_service.ecs_service.Public_IP
-}
