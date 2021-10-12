@@ -103,8 +103,8 @@ resource "aws_ecs_service" "ecs_service" {
   launch_type      = "FARGATE"
   platform_version = "LATEST"
   network_configuration {
-    subnets          = var.subnet_id
-    security_groups  = aws_security_group.serkinti_sg.id
+    subnets          = [var.subnet_id]
+    security_groups  = [aws_security_group.serkinti_sg.id]
     assign_public_ip = true
   }
   lifecycle {
