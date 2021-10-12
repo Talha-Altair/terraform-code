@@ -83,7 +83,8 @@ resource "aws_ecs_task_definition" "serkinti_td" {
       ]
       environment = [
         {
-          API_URL = "http://localhost:4010"
+          "name"    : "API_URL"
+          "value"   : "http://localhost:4010"
         }
       ]
     }
