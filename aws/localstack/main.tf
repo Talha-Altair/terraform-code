@@ -27,6 +27,7 @@ provider "aws" {
     ssm            = "http://localhost:4566"
     stepfunctions  = "http://localhost:4566"
     sts            = "http://localhost:4566"
+    ec2            = "http://localhost:4566"
   }
 }
 
@@ -42,6 +43,6 @@ resource "aws_s3_bucket" "bucket" {
 
 output "region" {
 
-    value = aws_s3_bucket.bucket
-  
+  value = aws_s3_bucket.bucket
+
 }
