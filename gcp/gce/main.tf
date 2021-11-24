@@ -1,17 +1,21 @@
 provider "google" {
-    project = "altair"
+    project = "altair-330820"
     region  = "asia-south1"
     credentials = "${file("creds.json")}"
 }
 
 resource "google_compute_instance" "default" {
-  name         = "Altair"
+  name         = "altairmachine"
   machine_type = "e2-micro"
   zone         = "asia-south1-a"
 
+  metadata = {
+    ssh-keys = "${var.gce_ssh_user}:${file(var.gce_ssh_pub_key_file)}"
+  }
+
   boot_disk {
     initialize_params {
-      image = "Ubuntu/Ubuntu 20.04 LTS"
+      image = "ubuntu-os-cloud/ubuntu-2004-focal-v20211118"
     }
   }
 
@@ -26,10 +30,10 @@ resource "google_compute_instance" "default" {
     metadata_startup_script = "sudo apt-get update"
 
     // Apply the firewall rule to allow external IPs to access this instance
-    tags = ["firewall_tag_for_target"]
+    tags = ["firewall-tag-for-target"]
 }
 
-resource "google_compute_firewall" "firewall_tag_for_targetr" {
+resource "google_compute_firewall" "firewall_tag_for_target" {
   name    = "default-allow-http-terraform"
   network = "default"
 
@@ -40,7 +44,7 @@ resource "google_compute_firewall" "firewall_tag_for_targetr" {
 
   // Allow traffic from everywhere to instances with an http-server tag
   source_ranges = ["182.65.91.94"]
-  target_tags   = ["firewall_tag_for_target"]
+  target_tags   = ["firewall-tag-for-target"]
 }
 
 output "ip" {
