@@ -1,0 +1,3 @@
+variable "a" {
+  description = "a"
+}
