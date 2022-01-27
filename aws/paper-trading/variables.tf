@@ -22,16 +22,8 @@ variable "deployment_name" {
   description = "name of the ecs cluster"
 }
 
-variable "api_container" {
-  description = "container URI for backend"
-}
-
 variable "ui_container" {
   description = "container URI for frontend"
-}
-
-variable "api_port" {
-  description = "port for backend"
 }
 
 variable "ui_port" {

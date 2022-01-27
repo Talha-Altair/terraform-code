@@ -8,9 +8,9 @@ resource "aws_ecs_cluster" "cluster" {
   name = "${var.deployment_name}-cluster"
 }
 
-resource "aws_security_group" "serkinti_sg" {
+resource "aws_security_group" "sg" {
   name        = "${var.deployment_name}-sg"
-  description = "allow inbound access for serkinti ports"
+  description = "allow inbound access for ports"
 
   ingress {
     protocol    = "tcp"
@@ -23,13 +23,6 @@ resource "aws_security_group" "serkinti_sg" {
     protocol    = "tcp"
     from_port   = var.ui_port
     to_port     = var.ui_port
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    protocol    = "tcp"
-    from_port   = var.api_port
-    to_port     = var.api_port
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -52,18 +45,6 @@ resource "aws_ecs_task_definition" "td" {
 
   container_definitions = jsonencode([
     {
-      name      = "backend_container"
-      image     = var.api_container
-      essential = true
-      portMappings = [
-        {
-          containerPort = var.api_port
-          hostPort      = var.api_port
-        }
-      ],
-      essential = true
-    },
-    {
       name      = "frontend_container"
       image     = var.ui_container
       essential = true
@@ -71,12 +52,6 @@ resource "aws_ecs_task_definition" "td" {
         {
           containerPort = var.ui_port
           hostPort      = var.ui_port
-        }
-      ]
-      environment = [
-        {
-          "name" : "API_URL"
-          "value" : "http://localhost:${var.api_port}"
         }
       ]
     }
@@ -87,13 +62,13 @@ resource "aws_ecs_task_definition" "td" {
 resource "aws_ecs_service" "ecs_service" {
   name             = "${var.deployment_name}-service"
   cluster          = aws_ecs_cluster.cluster.id
-  task_definition  = aws_ecs_task_definition.serkinti_td.arn
+  task_definition  = aws_ecs_task_definition.td.arn
   desired_count    = 1
   launch_type      = "FARGATE"
   platform_version = "LATEST"
   network_configuration {
     subnets          = [var.subnet_id]
-    security_groups  = [aws_security_group.serkinti_sg.id]
+    security_groups  = [aws_security_group.sg.id]
     assign_public_ip = true
   }
   lifecycle {
